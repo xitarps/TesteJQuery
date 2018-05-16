@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <title>Curso jQuery Fundamental</title>
+        <style>
+            #principal {position: absolute; background-color:#069;}
+			#janela { position:relative; top: 0; left: 0; }
+            #janela img{float: left}
+		</style>
+        
+        <script src="jquery-3.2.1.min.js"></script>       
+        <script>
+            
+            var limite;
+            var larguraIMG;
+            var alturaIMG;
+            
+			$(function(e) {
+                mostrarEscondido();
+                setaJanela();
+                
+			});
+            
+            animacaoMoveFoto();
+            
+            function colocaImg()
+            {
+                $("#janela").append("<img src='imagens/foto1.jpg'></img>");
+                $("#janela").append("<img src='imagens/foto2.jpg'></img>");
+                $("#janela").append("<img src='imagens/foto3.jpg'></img>");
+                $("#janela").append("<img src='imagens/foto4.jpg'></img>");
+                $("#janela").append("<img src='imagens/foto1.jpg'></img>");
+                escondeAteCarregar();
+            }
+            
+            function escondeAteCarregar()
+            {
+                $("#principal").css("display","none");
+            }
+            
+            function mostrarEscondido()
+            {
+                $("#principal").css("display","block");
+            }
+            
+            function informaQtd()
+            {
+                $variavel  =  $("#janela img").length;
+                alert("div contem: " + $variavel);
+            }
+            
+            function setaJanela()
+            {
+                
+                
+                larguraIMG = $("#janela img:first").width();
+                alturaIMG = $("#janela img:first").height();
+                var propriedadesDaJanela = "rect(0 "+larguraIMG+"px "+ alturaIMG+"px 0)"
+                $("div#principal").css("clip",propriedadesDaJanela);
+                
+                
+            }
+            
+            function animacaoMoveFoto()
+            {
+            setInterval(Mover,3000);
+            }
+            
+            function Mover()
+            {
+                var movimento = "-="+($("#janela img:first").width());
+                $("#janela").animate({left:movimento},2000, function(){
+                    
+                    limite = -1*($("div#janela img").length-1)*$("#janela img:first").width();
+                    var posicaoAtual = $("#janela").position().left;
+                    if(posicaoAtual==limite)
+                       {
+                            //alert("final");
+                            $("#janela").css("left","0");
+                           
+                       }
+                });
+            }
+		</script>        
+    </head>
+
+    <body>
+        <div id="principal">
+            <div id="janela">
+
+            </div>
+        </div>
+        
+        <script>
+            colocaImg();
+		</script>   
+    </body>
+
+</html>
